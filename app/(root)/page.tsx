@@ -9,7 +9,8 @@ export default async function Home({ searchParams }: {
 }) {
 
   const query = (await searchParams).query;
-  const { data: posts }  = await sanityFetch({ query: startups_query });
+  const params = { search: query || null }
+  const { data: posts }  = await sanityFetch({ query: startups_query, params });
 
   // console.log(JSON.stringify(posts, null, 2))
 
