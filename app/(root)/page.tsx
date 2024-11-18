@@ -1,18 +1,17 @@
 import Image from "next/image";
 import SearchForm from "../../components/SearchForm";
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
-import { client } from "@/sanity/lib/client";
 import { startups_query } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({ searchParams }: {
   searchParams: Promise<{ query?: string }>
 }) {
 
   const query = (await searchParams).query;
+  const { data: posts }  = await sanityFetch({ query: startups_query });
 
-  const posts = await client.fetch(startups_query);
-
-  console.log(JSON.stringify(posts, null, 2))
+  // console.log(JSON.stringify(posts, null, 2))
 
   return (
     <>
@@ -37,6 +36,8 @@ export default async function Home({ searchParams }: {
             )}
          </ul>
       </section>
+
+      <SanityLive />
     </>
   );
 }
